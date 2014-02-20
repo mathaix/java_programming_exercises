@@ -9,7 +9,7 @@ public class WeightedDiceTest
     public void test()
     {
         float errVal = .01f;
-        float [] weights = new float[]{.5f,.10f,.15f,.2f, .2f, .3f};
+        float [] weights = new float[]{.05f,.10f,.15f,.2f, .2f, .3f};
         SixSidedWeightedDie theDie = new SixSidedWeightedDie(weights);
         int [] counts = new int []{0,0,0,0,0,0};
         int numThrows = 100000;
