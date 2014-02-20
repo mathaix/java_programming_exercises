@@ -7,7 +7,10 @@ package com.placester.test;
  * The task is as follows: implement this class as you see fit (modulo
  * not using any collections classes from java.util or
  * java,util.collections, and get the unit test in
- * src/test/com/placester/test/PriorityQueueTest to pass
+ * src/test/com/placester/test/PriorityQueueTest to pass. This class
+ * must allow dynamic resizing as elements are added. What the
+ * strategy is to do this is entirely up to you modulo the previously
+ * stated constraint.
  */
 public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
 {
