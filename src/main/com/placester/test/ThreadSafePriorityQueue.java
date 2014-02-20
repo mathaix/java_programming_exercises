@@ -1,8 +1,13 @@
 package com.placester.test;
-// NOTE: we are aware that there is a PriorityQueue in java.util. Please do not use it in your implementation
+// NOTE: we are aware that there is a PriorityQueue in
+// java.util. Please do not use any containers from
+// java.util in your solution, as this is a test of data
+// structure knowledge, rather than a test of java library knowledge
 /*
- * The task is as follows: implement this class as you see fit (modulo not using any Queue classes from java.util),
- * and get the unit test in src/test/com/placester/test/PriorityQueueTest to pass
+ * The task is as follows: implement this class as you see fit (modulo
+ * not using any collections classes from java.util or
+ * java,util.collections, and get the unit test in
+ * src/test/com/placester/test/PriorityQueueTest to pass
  */
 public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
 {
