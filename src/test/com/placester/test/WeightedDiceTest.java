@@ -12,12 +12,13 @@ public class WeightedDiceTest
         float [] weights = new float[]{.05f,.10f,.15f,.2f, .2f, .3f};
         try{
             SixSidedWeightedDie theDie = new SixSidedWeightedDie(weights);
-            /*int [] counts = new int []{0,0,0,0,0,0};
+            int [] counts = new int []{0,0,0,0,0,0};
             int numThrows = 100000;
             for(int i = 0; i < numThrows; i++)
             {
                 int val = theDie.throwDie();
-                counts[val-1]++;
+                System.out.format(" %d", val);
+                //counts[val-1]++;
             }
         
             for(int i = 0; i < 6; i++)
@@ -25,7 +26,7 @@ public class WeightedDiceTest
                 float actual = (float)counts[i]/numThrows;
                 float diff = Math.abs(actual - weights[i]);
                 Assert.assertTrue(diff <= errVal);
-            }*/
+            }
         }catch (Exception e){
             Assert.fail(e.toString());
         }
