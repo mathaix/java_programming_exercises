@@ -14,6 +14,10 @@ package com.placester.test;
  */
 public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
 {
+    //store queue elements on a heap orderd array
+    private Priority[] pq;
+    private int N = 0;
+    
     public ThreadSafePriorityQueue()
     {
         initialize();
@@ -22,14 +26,22 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     
     public void initialize()
     {
-        
+        //initiazlise with one element
+        pq = new Priority[1];
     }
     
     private boolean less(int i, int j){
+        if (pq[i].priority() <= pq[j].priority()){
+          return true;   
+        }
+        else return false;
         
     }
     
     private void exch(int i, int j){
+        Priority temp = pq[i];
+        pq[i] = pq[j];
+        pq[j] = temp;
         
     }
     
@@ -57,8 +69,7 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     @Override
     public boolean isEmpty()
     {
-        // TODO Auto-generated method stub
-        return false;
+        return N == 0;
     }
 
     @Override
@@ -71,15 +82,22 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     @Override
     public boolean add(Priority<X> e)
     {
-        // TODO Auto-generated method stub
-        return false;
+        pq[++N] = e;
+        swim(N);
+        return true;
     }
 
     @Override
     public Priority<X> poll()
     {
-        // TODO Auto-generated method stub
-        return null;
+        if (isEmpty()){
+            return null;
+        } else{
+            Priority<X> max = (Priority<X>) pq[1];
+            exch(1, N--);
+            sink(1);
+            return max; 
+        }
     }
 
     @Override

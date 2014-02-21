@@ -18,7 +18,7 @@ public class PriorityQueueTest
     @Test
     public void test() throws InterruptedException
     {
-        final ThreadSafePriorityQueue<QueueTestTask> q = new ThreadSafePriorityQueue<>();
+        final ThreadSafePriorityQueue<QueueTestTask> q = new ThreadSafePriorityQueue<QueueTestTask>();
         final Random rand = new Random();
         ExecutorService threadPool = Executors.newFixedThreadPool(20);
 
