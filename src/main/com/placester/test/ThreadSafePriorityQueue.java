@@ -31,7 +31,7 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     }
     
     private boolean less(int i, int j){
-        if (pq[i].priority < pq[j].priority){
+        if (pq[i].priority > pq[j].priority){
           return true;   
         }
         else return false;
@@ -46,9 +46,7 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     }
     
     private void swim(int k){
-        System.out.format("swmin %d, \n", k);
         while (k > 1 && less(k/2,k)){
-            System.out.format(" swiming %d, %d \n", k, k/2);
             exch(k/2, k);
             k = k/2;
         }   
@@ -116,12 +114,10 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     public synchronized Priority<X> poll()
     {
         if (isEmpty()){
-            System.out.println("Empty ");
             notifyAll();
             return null;
         } else{
             Priority<X> max = (Priority<X>) pq[1];
-            System.out.format("%d ", max.priority);
             exch(1, N--);
             pq[N+1] = null;
             sink(1);
@@ -149,8 +145,8 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     public synchronized boolean contains(Priority<X> x)
     {
         //walk array to find element.
-        for (int i=1; i < N; i++){
-            if (pq[i].item() == x){
+        for (int i=1; i <= N; i++){
+            if (pq[i].hashCode()==x.hashCode()){
                 notifyAll();
                 return true;
             }
