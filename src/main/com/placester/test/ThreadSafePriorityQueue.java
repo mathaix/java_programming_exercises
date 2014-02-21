@@ -46,11 +46,22 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     }
     
     private void swim(int k){
-        
+        while (k > 1 && less(k/2,k)){
+            exch(k/2, k);
+            k = k/2;
+        }   
     }
     
     private void sink(int k){
-        
+        while (2*k <=N){
+           int j=2*k;
+           if (j <N && less (j, j+1)){
+             j++;   
+           }
+           if (!less(k,j)) break;
+           exch(k,j);
+           k = j;
+        }
     }
     
     private void resize(){
@@ -62,8 +73,7 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     @Override
     public int size()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return N;
     }
 
     @Override
@@ -75,7 +85,8 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     @Override
     public void clear()
     {
-  
+        //re-initialize
+        initialize();
         
     }
 
@@ -103,14 +114,24 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     @Override
     public Priority<X> peek()
     {
-        // TODO Auto-generated method stub
-        return null;
+        if (isEmpty()){
+            return null;
+        } else{
+            Priority<X> max = (Priority<X>) pq[1];
+            return max;
+        }
     }
 
     @Override
     public boolean contains(Priority<X> x)
     {
-        // TODO Auto-generated method stub
+        //walk array to find element.
+        for (int i=0; i < pq.length; i++){
+            if (pq[i].item() == X){
+                return true;
+            }
+        }
+        
         return false;
     }
 }
