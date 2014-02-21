@@ -13,12 +13,12 @@ public class WeightedDiceTest
         try{
             SixSidedWeightedDie theDie = new SixSidedWeightedDie(weights);
             int [] counts = new int []{0,0,0,0,0,0};
-            int numThrows = 100000;
+            int numThrows = 100;
             for(int i = 0; i < numThrows; i++)
             {
                 int val = theDie.throwDie();
                 System.out.format(" %d", val);
-                //counts[val-1]++;
+                counts[val-1]++;
             }
         
             for(int i = 0; i < 6; i++)

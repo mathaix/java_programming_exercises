@@ -36,17 +36,26 @@ public class SixSidedWeightedDie extends WeightedDie
         }
         
         int counter = 1;
+        int base = 0;
         for (int i = 0; i<weights.length; i++){
               int count = Math.round(weights[i] * 100);
-              for (int j = i; j < i+count; j++)
+              for (int j = base; j < base+count; j++){
                   dices[j] = counter;
+              }
+              base = base + count;   
               counter = counter +1;
         }
+        
+        /*for (int j = 0; j < dices.length; j++){
+            System.out.format(" %d \n", dices[j]);
+        }*/
         
     }
     
     private int uniform_random(int N){
-        return (int) Math.random() * N;
+        double uniform = Math.random() * N;
+         //System.out.format(" %d \n", Math.round(uniform));
+        return (int)Math.round(uniform);
     }
     
     private void shuffle(){
@@ -54,6 +63,7 @@ public class SixSidedWeightedDie extends WeightedDie
         int N = dices.length;
         for (int i = 0; i < N ; i++){
             int r = i + uniform_random(N-1);
+            System.out.format(" %d \n", r);
                 
             int temp = dices[i];
             dices[i] = dices[r];
