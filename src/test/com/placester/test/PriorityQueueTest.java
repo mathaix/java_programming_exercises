@@ -22,10 +22,6 @@ public class PriorityQueueTest
         final Random rand = new Random();
         ExecutorService threadPool = Executors.newFixedThreadPool(20);
         
-        Priority<QueueTestTask> ins = new Priority<QueueTestTask>(666, new QueueTestTask(0));
-        q.add(ins);
-        Priority<QueueTestTask> t = q.poll();
-        Assert.assertTrue(t.priority == 666);
 
         int max = 1000;
         for(int i = 0; i < max; i++)
@@ -56,7 +52,6 @@ public class PriorityQueueTest
         while(!q.isEmpty())
         {
             Priority<QueueTestTask> item = q.poll();
-           
             Assert.assertTrue(item.priority >= startPriority);
         }
         

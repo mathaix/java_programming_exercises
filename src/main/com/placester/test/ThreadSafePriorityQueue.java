@@ -27,7 +27,7 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     private void initialize()
     {
         //initiazlise with one element
-        pq = new Priority[1000];
+        pq = new Priority[1];
     }
     
     private boolean less(int i, int j){
@@ -67,8 +67,8 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     
     private void resize(int len){
         //create new array
-        Priority[] pq_temp = new Priority[len];
-        for (int i = 0; i< N; i++){
+        Priority[] pq_temp = new Priority[len+1];
+        for (int i = 0; i<= N; i++){
             pq_temp[i] = pq[i];   
         }
         pq = pq_temp;
@@ -122,7 +122,7 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
             pq[N+1] = null;
             sink(1);
             //make array smaller
-            //if (N > 0 && N == pq.length/4 ) resize(pq.length/4);
+            if (N > 0 && N == pq.length/4 ) resize(pq.length/4);
             notifyAll();
             return max; 
         }
