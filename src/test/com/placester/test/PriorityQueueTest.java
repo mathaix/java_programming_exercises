@@ -27,7 +27,7 @@ public class PriorityQueueTest
         Priority<QueueTestTask> t = q.poll();
         Assert.assertTrue(t.priority == 666);
 
-        int max = 1000;
+        int max = 10;
         for(int i = 0; i < max; i++)
         {
             final int idx = i;

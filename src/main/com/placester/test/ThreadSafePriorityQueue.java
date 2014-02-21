@@ -46,8 +46,9 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     }
     
     private void swim(int k){
+        System.out.format("swmin %d, \n", k);
         while (k > 1 && less(k/2,k)){
-            System.out.format("swimiing %d, %d \n", k, k/2);
+            System.out.format(" swiming %d, %d \n", k, k/2);
             exch(k/2, k);
             k = k/2;
         }   
@@ -148,7 +149,7 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     public synchronized boolean contains(Priority<X> x)
     {
         //walk array to find element.
-        for (int i=0; i < pq.length; i++){
+        for (int i=1; i < N; i++){
             if (pq[i].item() == x){
                 notifyAll();
                 return true;
