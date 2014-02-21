@@ -1,4 +1,5 @@
 package com.placester.test;
+import java.util.Random;
 
 
 /*
@@ -16,6 +17,8 @@ public class SixSidedWeightedDie extends WeightedDie
     // should be of length 6. You should throw if either of these preconditions is false
     //final float[] dice_weights;
     final int[] dices = new int[100];
+    private static Random random;
+    private static long seed;
     
     public SixSidedWeightedDie(float[] weights) throws Exception
     {
@@ -46,25 +49,22 @@ public class SixSidedWeightedDie extends WeightedDie
               counter = counter +1;
         }
         
-        /*for (int j = 0; j < dices.length; j++){
-            System.out.format(" %d \n", dices[j]);
-        }*/
+
+        seed = System.currentTimeMillis();
+        random = new Random(seed);
         
     }
     
     private int uniform_random(int N){
-        double uniform = Math.random() * N;
-         //System.out.format(" %d \n", Math.round(uniform));
-        return (int)Math.round(uniform);
+        return random.nextInt(N);
     }
     
     private void shuffle(){
         //shuffle the dices
         int N = dices.length;
         for (int i = 0; i < N ; i++){
-            int r = i + uniform_random(N-1);
-            System.out.format(" %d \n", r);
-                
+            int r = i + uniform_random(N-i);
+            
             int temp = dices[i];
             dices[i] = dices[r];
             dices[r] = temp;
