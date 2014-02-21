@@ -64,9 +64,13 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
         }
     }
     
-    private void resize(){
-        
-        
+    private void resize(int len){
+        //create new array
+        Priority[] pq_temp = new Priority[len];
+        for (int i = 0; i< N; i++){
+            pq_temp[i] = pq[i];   
+        }
+        pq = pq_temp;
     }
     
     
@@ -93,6 +97,8 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     @Override
     public boolean add(Priority<X> e)
     {
+        //make array larger
+        if (N == pq.length) resize(2 * pq.length);
         pq[++N] = e;
         swim(N);
         return true;
@@ -107,6 +113,8 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
             Priority<X> max = (Priority<X>) pq[1];
             exch(1, N--);
             sink(1);
+            //make array smaller
+            if (N > 0 && N == pq.length/4) resize(pq.length/4);
             return max; 
         }
     }
@@ -127,7 +135,7 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     {
         //walk array to find element.
         for (int i=0; i < pq.length; i++){
-            if (pq[i].item() == X){
+            if (pq[i].item() == x){
                 return true;
             }
         }
