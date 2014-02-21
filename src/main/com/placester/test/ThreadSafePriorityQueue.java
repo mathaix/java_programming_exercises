@@ -22,7 +22,28 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     
     public void initialize()
     {
-        //TODO: put your initialization code here
+        
+    }
+    
+    private boolean less(int i, int j){
+        
+    }
+    
+    private void exch(int i, int j){
+        
+    }
+    
+    private void swim(int k){
+        
+    }
+    
+    private void sink(int k){
+        
+    }
+    
+    private void resize(){
+        
+        
     }
     
     
@@ -43,7 +64,7 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     @Override
     public void clear()
     {
-        // TODO Auto-generated method stub
+  
         
     }
 
