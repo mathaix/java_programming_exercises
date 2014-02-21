@@ -53,6 +53,7 @@ public class SixSidedWeightedDie extends WeightedDie
         seed = System.currentTimeMillis();
         random = new Random(seed);
         
+        
     }
     
     private int uniform_random(int N){
