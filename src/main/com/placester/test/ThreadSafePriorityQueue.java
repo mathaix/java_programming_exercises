@@ -26,7 +26,7 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     
     private void initialize()
     {
-        //initiazlise with one element
+        //initialize with one element
         pq = new Priority[1];
     }
     
@@ -146,6 +146,7 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     {
         //walk array to find element.
         for (int i=1; i <= N; i++){
+            //for some reason equals doesnt work.
             if (pq[i].hashCode()==x.hashCode()){
                 notifyAll();
                 return true;
