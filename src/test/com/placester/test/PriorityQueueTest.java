@@ -21,6 +21,11 @@ public class PriorityQueueTest
         final ThreadSafePriorityQueue<QueueTestTask> q = new ThreadSafePriorityQueue<QueueTestTask>();
         final Random rand = new Random();
         ExecutorService threadPool = Executors.newFixedThreadPool(20);
+        
+        Priority<QueueTestTask> ins = new Priority<QueueTestTask>(666, new QueueTestTask(0));
+        q.add(ins);
+        Priority<QueueTestTask> t = q.poll();
+        Assert.assertTrue(t.priority == 666);
 
         int max = 1000;
         for(int i = 0; i < max; i++)
@@ -31,6 +36,7 @@ public class PriorityQueueTest
                 public void run()
                 {
                     q.add(new Priority<QueueTestTask>(rand.nextInt(100), new QueueTestTask(idx)));
+                    
                     try
                     {
                         //make sure we actually hit multiple threads;
@@ -50,6 +56,7 @@ public class PriorityQueueTest
         while(!q.isEmpty())
         {
             Priority<QueueTestTask> item = q.poll();
+           
             Assert.assertTrue(item.priority >= startPriority);
         }
         

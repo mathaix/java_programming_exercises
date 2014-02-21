@@ -24,14 +24,14 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     }
     
     
-    public void initialize()
+    private void initialize()
     {
         //initiazlise with one element
-        pq = new Priority[1];
+        pq = new Priority[1000];
     }
     
     private boolean less(int i, int j){
-        if (pq[i].priority() <= pq[j].priority()){
+        if (pq[i].priority < pq[j].priority){
           return true;   
         }
         else return false;
@@ -47,6 +47,7 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     
     private void swim(int k){
         while (k > 1 && less(k/2,k)){
+            System.out.format("swimiing %d, %d \n", k, k/2);
             exch(k/2, k);
             k = k/2;
         }   
@@ -58,6 +59,7 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
            if (j <N && less (j, j+1)){
              j++;   
            }
+           
            if (!less(k,j)) break;
            exch(k,j);
            k = j;
@@ -75,71 +77,84 @@ public class ThreadSafePriorityQueue<X> implements SimpleQueue<Priority<X>>
     
     
     @Override
-    public int size()
+    public synchronized int size()
     {
+        notifyAll();
         return N;
     }
 
     @Override
-    public boolean isEmpty()
+    public synchronized boolean isEmpty()
     {
-        return N == 0;
+        boolean result = (N == 0);
+        notifyAll();
+        return result;
     }
 
     @Override
-    public void clear()
+    public synchronized void clear()
     {
         //re-initialize
         initialize();
+        notifyAll();
         
     }
 
     @Override
-    public boolean add(Priority<X> e)
+    public synchronized boolean add(Priority<X> e)
     {
-        //make array larger
-        if (N == pq.length) resize(2 * pq.length);
+        //make array larger; start inserting at 1.. element 0 is not used. 
+        if (N == pq.length-1) resize(2 * pq.length);
         pq[++N] = e;
         swim(N);
+        notifyAll();
         return true;
     }
 
     @Override
-    public Priority<X> poll()
+    public synchronized Priority<X> poll()
     {
         if (isEmpty()){
+            System.out.println("Empty ");
+            notifyAll();
             return null;
         } else{
             Priority<X> max = (Priority<X>) pq[1];
+            System.out.format("%d ", max.priority);
             exch(1, N--);
+            pq[N+1] = null;
             sink(1);
             //make array smaller
-            if (N > 0 && N == pq.length/4) resize(pq.length/4);
+            //if (N > 0 && N == pq.length/4 ) resize(pq.length/4);
+            notifyAll();
             return max; 
         }
     }
 
     @Override
-    public Priority<X> peek()
+    public synchronized Priority<X> peek()
     {
         if (isEmpty()){
+            notifyAll();
             return null;
         } else{
             Priority<X> max = (Priority<X>) pq[1];
+            notifyAll();
             return max;
         }
     }
 
     @Override
-    public boolean contains(Priority<X> x)
+    public synchronized boolean contains(Priority<X> x)
     {
         //walk array to find element.
         for (int i=0; i < pq.length; i++){
             if (pq[i].item() == x){
+                notifyAll();
                 return true;
             }
         }
-        
+        notifyAll();
         return false;
     }
 }
