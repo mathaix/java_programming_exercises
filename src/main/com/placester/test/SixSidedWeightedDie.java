@@ -1,5 +1,6 @@
 package com.placester.test;
 
+
 /*
  * Implement a 6 sided die with weights on the sides, so that we don't have an even probability distribution, but it is 
  * weighted by a list of weights passed in at construction time
@@ -13,10 +14,30 @@ public class SixSidedWeightedDie extends WeightedDie
 {
     //NOTE: since these are weights on a probability distribution, these should sum to one, and the incoming array
     // should be of length 6. You should throw if either of these preconditions is false
-    public SixSidedWeightedDie(float[] weights)
+    final float[] dice_weights;
+    
+    public SixSidedWeightedDie(float[] weights) throws Exception
     {
         super(weights);
-        // TODO Auto-generated constructor stub
+        float sum = 0f;
+        
+        if (weights.length != 6){
+            throw new Exception ("invalid array lenght");
+        }
+        
+        for (int i = 0;  i< weights.length; i++) {
+            
+            sum = sum + weights[i];
+            System.out.format("%f", weights[i]);
+        }
+        
+        if (sum != 1.0){
+           
+           throw new Exception("invalid distribution"); 
+        }
+        
+        dice_weights = weights;
+        
     }
 
     //Throw the die: this should produce a value in [1,6]
